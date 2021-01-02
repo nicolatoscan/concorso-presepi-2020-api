@@ -67,6 +67,7 @@ async function getResults(req: express.Request, res: express.Response) {
         .toArray())
         .map(x => {
             delete x._id;
+            delete x.ip;
             delete x.date;
             return x;
         })

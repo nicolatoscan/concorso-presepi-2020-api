@@ -51,6 +51,7 @@ async function save(req: express.Request, res: express.Response) {
     }
     const inserted = (await databaseHelper.getCollection('presepi').insertOne({
         ...req.body,
+        ip: req.connection.remoteAddress,
         date: new Date()
     })).insertedCount
     if (inserted !== 1)

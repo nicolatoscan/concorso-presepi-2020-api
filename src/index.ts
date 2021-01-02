@@ -39,6 +39,7 @@ function middleware(app: express.Application) {
 
 function routes(app: express.Application) {
     app.get('/', (req, res) => { res.send("I'm ok :)") });
+    app.get('/result', (req, res) => { getResults(req, res); });
     app.post('/save', (req, res) => { save(req, res); });
 }
 
@@ -56,6 +57,36 @@ async function save(req: express.Request, res: express.Response) {
         return res.status(500).send('2');
     else
         return res.status(201).send('OK');
+}
+
+async function getResults(req: express.Request, res: express.Response) {
+    const votesArrs: { [id: string]: number[] }  = (await databaseHelper
+        .getCollection('presepi')
+        .find()
+        .toArray())
+        .map(x => {
+            delete x._id;
+            delete x.date;
+            return x;
+        })
+        .reduce((a, b) => {
+            for (const k in b) {
+                if (a[k] === undefined) {
+                    a[k] = [b[k]]
+                } else {
+                    a[k].push(b[k])
+                }
+            }
+            return a;
+        }, {})
+    const votes: { [id: string]: { avg: number, n: number } } = {}
+    for (const k in votesArrs) {
+        votes[k] = {
+            avg: votesArrs[k].length > 0 ? votesArrs[k].reduce((a, b) => a + b, 0) / votesArrs[k].length : 0,
+            n: votesArrs[k].length
+        }
+    }
+    return res.send(votes)
 }
 
 

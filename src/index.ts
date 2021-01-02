@@ -47,6 +47,11 @@ async function save(req: express.Request, res: express.Response) {
     for (const k in req.body) {
         if (typeof req.body[k] !== 'number') {
             return res.status(400).send('1');
+        } else {
+            if (req.body[k] > 5)
+                req.body[k] = 5
+            else if (req.body[k] < 1)
+                req.body[k] = 1
         }
     }
     const inserted = (await databaseHelper.getCollection('presepi').insertOne({

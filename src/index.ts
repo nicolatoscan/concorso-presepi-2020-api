@@ -38,6 +38,7 @@ function middleware(app: express.Application) {
 }
 
 function routes(app: express.Application) {
+    app.get('/', (req, res) => { res.send("I'm ok :)") });
     app.post('/save', (req, res) => { save(req, res); });
 }
 

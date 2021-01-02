@@ -1,7 +1,7 @@
 module.exports = {
     apps: [{
         name: 'rememo-api',
-        script: './dist/source/index.js',
+        script: './dist/index.js',
         instances: 'max',
         env: {
             NODE_ENV: 'development',

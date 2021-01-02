@@ -12,7 +12,7 @@ async function start(app: express.Application, defaultPort: number | undefined =
 
     middleware(app);
     routes(app);
-    const port = 3000;
+    const port = process.env.PORT ?? 3000;
     const server = app.listen(port);
     console.log(`Server listening on port ${port}`);
     process.on('SIGINT', () => {

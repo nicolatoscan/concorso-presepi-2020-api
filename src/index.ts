@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import databaseHelper from './database.helper';
+import requestIp from 'request-ip';
 dotenv.config();
 
 
@@ -56,7 +57,7 @@ async function save(req: express.Request, res: express.Response) {
     }
     const inserted = (await databaseHelper.getCollection('presepi').insertOne({
         ...req.body,
-        ip: req.connection.remoteAddress,
+        ip: requestIp.getClientIp(req),
         date: new Date()
     })).insertedCount
     if (inserted !== 1)

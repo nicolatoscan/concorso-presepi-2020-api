@@ -26,7 +26,7 @@ function getDb(db: string = process.env.DEFAULT_DB as string): Db {
 }
 
 function getCollection(
-    collection: 'presepi'
+    collection: 'presepi2021'
 ): Collection {
     return getDb().collection(collection);
 }

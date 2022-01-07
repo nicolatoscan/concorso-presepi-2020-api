@@ -55,7 +55,7 @@ async function save(req: express.Request, res: express.Response) {
                 req.body[k] = 1
         }
     }
-    const inserted = (await databaseHelper.getCollection('presepi').insertOne({
+    const inserted = (await databaseHelper.getCollection('presepi2021').insertOne({
         ...req.body,
         ip: requestIp.getClientIp(req),
         date: new Date()
@@ -68,7 +68,7 @@ async function save(req: express.Request, res: express.Response) {
 
 async function getResults(req: express.Request, res: express.Response) {
     const votesArrs: { [id: string]: number[] }  = (await databaseHelper
-        .getCollection('presepi')
+        .getCollection('presepi2021')
         .find()
         .toArray())
         .map(x => {
